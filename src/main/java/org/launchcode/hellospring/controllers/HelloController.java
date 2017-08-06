@@ -17,7 +17,6 @@ public class HelloController {
         return "Hello " + name + " ...RequestMapping value = '' (empty)";
     }
 
-
     @RequestMapping(value="goodbye")
     @ResponseBody
     public String goodbye(){
@@ -46,6 +45,56 @@ public class HelloController {
     public String helloUrlSegment(@PathVariable String name){
         return "Hello " + name + " ...RequestMapping value = hello/{name}";
 
+    }
+
+
+    @RequestMapping(value = "language", method = RequestMethod.GET)
+    @ResponseBody
+    public String languageForm(){
+        String html =
+                "<form method='post'>" +
+                        "<input type='text' name='name' />" +
+                        "<select id='language' name='language'>" +
+                            "<option name='English' value='English' selected>English</option>" +
+                            "<option name='French' value='French'>French</option>" +
+                            "<option name='Japanese' value='Japanese'>Japanese</option>" +
+                            "<option name='Spanish' value='Spanish'>Spanish</option>" +
+                            "<option name='German' value='German'>German</option>" +
+                        "</select>" +
+                        "<input type='submit' value='Say Hi!'/>" +
+                "</form>";
+        return html;
+    }
+
+    @RequestMapping(value = "language", method = RequestMethod.POST)
+    @ResponseBody
+    public String languagePost(HttpServletRequest request){
+        String name = request.getParameter("name");
+        String language = request.getParameter("language");
+        String myMessage = createMessage(name, language);
+        String html =
+                "<h1 style='color: red; background-color: blue;'>" + myMessage + "</h1>";
+        return html;
+    }
+
+    public static String createMessage(String name, String language){
+        String hello = "";
+        if (language.equals("English")){
+            hello = "Hello";
+        }
+        if (language.equals("French")){
+            hello = "Bonjour";
+        }
+        if (language.equals("Japanese")){
+            hello = "Konichiwa";
+        }
+        if (language.equals("Spanish")){
+            hello = "Hola";
+        }
+        if (language.equals("German")){
+            hello = "Hallo";
+        }
+        return hello + ", " + name;
     }
 
 }
