@@ -1,30 +1,35 @@
 package org.launchcode.hellospring.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
+//Controller and ResponseBody are replaced by RestController
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
+@RestController
 public class HelloController {
 
+
+//    request mapping maps (/) to the index() method. When invoked via browser or curl, the method returns pure text--because @restcontroller combines controller and responsebody, two annotations that result in web requests returning data and not a 'view'
     @RequestMapping(value="")
-    @ResponseBody
+//    @ResponseBody
     public String index(HttpServletRequest request){
         String name = request.getParameter("name");
-        return "Hello " + name + " ...RequestMapping value = '' (empty)";
+        return "Hello " + name;
     }
 
     @RequestMapping(value="goodbye")
-    @ResponseBody
+//    @ResponseBody
     public String goodbye(){
         return "Goodbye";
     }
 
     @RequestMapping(value = "hello", method = RequestMethod.GET)
-    @ResponseBody
+//    @ResponseBody
     public String helloForm(){
         String html = "<form method='post'>" +
                 "<input type='text' name='name' />" +
@@ -34,22 +39,22 @@ public class HelloController {
     }
 
     @RequestMapping(value = "hello", method = RequestMethod.POST)
-    @ResponseBody
+//    @ResponseBody
     public String helloPost(HttpServletRequest request){
         String name = request.getParameter("name");
-        return "Hello " + name + " ...Requestmapping value = hello, requestMETHOD = post";
+        return "Hello " + name;
     }
 
     @RequestMapping(value = "hello/{name}")
-    @ResponseBody
+//    @ResponseBody
     public String helloUrlSegment(@PathVariable String name){
-        return "Hello " + name + " ...RequestMapping value = hello/{name}";
+        return "Hello " + name;
 
     }
 
 
     @RequestMapping(value = "language", method = RequestMethod.GET)
-    @ResponseBody
+//    @ResponseBody
     public String languageForm(){
         String html =
                 "<form method='post'>" +
@@ -67,13 +72,13 @@ public class HelloController {
     }
 
     @RequestMapping(value = "language", method = RequestMethod.POST)
-    @ResponseBody
+//    @ResponseBody
     public String languagePost(HttpServletRequest request){
         String name = request.getParameter("name");
         String language = request.getParameter("language");
         String myMessage = createMessage(name, language);
         String html =
-                "<h1 style='color: red; background-color: blue;'>" + myMessage + "</h1>";
+                "<h1 style='color: purple;'>" + myMessage + "</h1>";
         return html;
     }
 
